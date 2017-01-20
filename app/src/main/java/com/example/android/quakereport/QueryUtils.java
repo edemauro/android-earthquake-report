@@ -45,7 +45,8 @@ public final class QueryUtils {
 
                 Earthquake tmp = new Earthquake(eqData.getDouble("mag"),
                         eqData.getString("place"),
-                        eqData.getLong("time"));
+                        eqData.getLong("time"),
+                        eqData.getString("url"));
 
                 earthquakes.add(tmp);
             }

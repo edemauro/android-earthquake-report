@@ -1,7 +1,9 @@
 package com.example.android.quakereport;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -15,11 +17,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
+public class EarthquakeAdapter extends ArrayAdapter<Earthquake> implements
+        View.OnClickListener {
     private static final String LOG_TAG = EarthquakeActivity.class.getName();
+    private Activity mContext;
+    private Earthquake mEarthquake;
 
     public EarthquakeAdapter(Activity context, ArrayList<Earthquake> earthquakes) {
         super(context, 0, earthquakes);
+        mContext = context;
     }
 
     @NonNull
@@ -31,17 +37,17 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
                     R.layout.list_item, parent, false);
         }
 
-        Earthquake eq = getItem(position);
+        mEarthquake = getItem(position);
         String[] locationParts;
 
-        if(eq.getLocation().contains("of")) {
-            locationParts = eq.getLocation().split("of");
+        if(mEarthquake.getLocation().contains("of")) {
+            locationParts = mEarthquake.getLocation().split("of");
         } else {
-            locationParts = new String[]{"Near the", eq.getLocation()};
+            locationParts = new String[]{"Near the", mEarthquake.getLocation()};
         }
 
-        String magnitude = formatMagnitude(eq.getMagnitude());
-        Date dateObject = new Date(eq.getTimeInMilliseconds());
+        String magnitude = formatMagnitude(mEarthquake.getMagnitude());
+        Date dateObject = new Date(mEarthquake.getTimeInMilliseconds());
         String formattedDate = formatDate(dateObject);
         String formattedTime = formatTime(dateObject);
 
@@ -62,9 +68,11 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeView.getBackground();
 
-        int magntiudeColor = getMagnitudeColor(eq.getMagnitude());
+        int magntiudeColor = getMagnitudeColor(mEarthquake.getMagnitude());
 
         magnitudeCircle.setColor(magntiudeColor);
+
+        listItemView.setOnClickListener(this);
 
         return listItemView;
     }
@@ -115,5 +123,12 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a");
 
         return dateFormat.format(dateObject);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Uri webpage = Uri.parse(mEarthquake.getWebpage());
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        mContext.startActivity(intent);
     }
 }
