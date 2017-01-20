@@ -1,9 +1,7 @@
 package com.example.android.quakereport;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -17,15 +15,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class EarthquakeAdapter extends ArrayAdapter<Earthquake> implements
-        View.OnClickListener {
+public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     private static final String LOG_TAG = EarthquakeActivity.class.getName();
-    private Activity mContext;
     private Earthquake mEarthquake;
 
     public EarthquakeAdapter(Activity context, ArrayList<Earthquake> earthquakes) {
         super(context, 0, earthquakes);
-        mContext = context;
     }
 
     @NonNull
@@ -71,8 +66,6 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> implements
         int magntiudeColor = getMagnitudeColor(mEarthquake.getMagnitude());
 
         magnitudeCircle.setColor(magntiudeColor);
-
-        listItemView.setOnClickListener(this);
 
         return listItemView;
     }
@@ -123,12 +116,5 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> implements
         SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a");
 
         return dateFormat.format(dateObject);
-    }
-
-    @Override
-    public void onClick(View view) {
-        Uri webpage = Uri.parse(mEarthquake.getWebpage());
-        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-        mContext.startActivity(intent);
     }
 }
