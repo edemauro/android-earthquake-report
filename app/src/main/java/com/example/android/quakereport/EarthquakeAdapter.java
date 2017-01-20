@@ -1,7 +1,9 @@
 package com.example.android.quakereport;
 
 import android.app.Activity;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,35 +41,63 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         }
 
         String magnitude = formatMagnitude(eq.getMagnitude());
+        Date dateObject = new Date(eq.getTimeInMilliseconds());
+        String formattedDate = formatDate(dateObject);
+        String formattedTime = formatTime(dateObject);
 
         TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
-
         magnitudeView.setText(magnitude);
 
         TextView offsetView = (TextView) listItemView.findViewById(R.id.offset);
-
         offsetView.setText(locationParts[0]);
 
         TextView cityView = (TextView) listItemView.findViewById(R.id.city);
-
         cityView.setText(locationParts[1]);
 
-        Date dateObject = new Date(eq.getTimeInMilliseconds());
-
         TextView dateView = (TextView) listItemView.findViewById(R.id.date);
-
-        String formattedDate = formatDate(dateObject);
-
         dateView.setText(formattedDate);
 
         TextView timeView = (TextView) listItemView.findViewById(R.id.time);
-
-        String formattedTime = formatTime(dateObject);
-
         timeView.setText(formattedTime);
+
+        GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeView.getBackground();
+
+        int magntiudeColor = getMagnitudeColor(eq.getMagnitude());
+
+        magnitudeCircle.setColor(magntiudeColor);
 
         return listItemView;
     }
+
+    private int getMagnitudeColor(double magnitude) {
+        int magnitudeColorResourceId;
+
+        if(magnitude < 2) {
+            magnitudeColorResourceId = R.color.magnitude1;
+        } else if(magnitude < 3) {
+            magnitudeColorResourceId = R.color.magnitude2;
+        } else if(magnitude < 4) {
+            magnitudeColorResourceId = R.color.magnitude3;
+        } else if(magnitude < 5) {
+            magnitudeColorResourceId = R.color.magnitude4;
+        } else if(magnitude < 6) {
+            magnitudeColorResourceId = R.color.magnitude5;
+        } else if(magnitude < 7) {
+            magnitudeColorResourceId = R.color.magnitude6;
+        } else if(magnitude < 8) {
+            magnitudeColorResourceId = R.color.magnitude7;
+        } else if(magnitude < 9) {
+            magnitudeColorResourceId = R.color.magnitude8;
+        } else if(magnitude < 10) {
+            magnitudeColorResourceId = R.color.magnitude9;
+        } else {
+            magnitudeColorResourceId = R.color.magnitude10plus;
+        }
+
+        return ContextCompat.getColor(getContext(), magnitudeColorResourceId);
+
+    }
+
 
     private String formatMagnitude(double magnitude) {
         DecimalFormat formatter = new DecimalFormat("0.0");
