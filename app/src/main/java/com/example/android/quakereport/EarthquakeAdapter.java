@@ -2,14 +2,15 @@ package com.example.android.quakereport;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     private static final String LOG_TAG = EarthquakeActivity.class.getName();
@@ -37,10 +38,32 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         cityView.setText(eq.getCity());
 
+        Date dateObject = new Date(eq.getTimeInMilliseconds());
+
         TextView dateView = (TextView) listItemView.findViewById(R.id.date);
 
-        dateView.setText(DateFormat.format("MMM dd, yyyy", eq.getDate()));
+        String formattedDate = formatDate(dateObject);
+
+        dateView.setText(formattedDate);
+
+        TextView timeView = (TextView) listItemView.findViewById(R.id.time);
+
+        String formattedTime = formatTime(dateObject);
+
+        timeView.setText(formattedTime);
 
         return listItemView;
+    }
+
+    private String formatDate(Date dateObject) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("LLL dd, yyyy");
+
+        return dateFormat.format(dateObject);
+    }
+
+    private String formatTime(Date dateObject) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a");
+
+        return dateFormat.format(dateObject);
     }
 }
