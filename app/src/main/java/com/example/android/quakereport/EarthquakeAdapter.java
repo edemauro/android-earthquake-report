@@ -29,14 +29,25 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         }
 
         Earthquake eq = getItem(position);
+        String[] locationParts;
+
+        if(eq.getLocation().contains("of")) {
+            locationParts = eq.getLocation().split("of");
+        } else {
+            locationParts = new String[]{"Near the", eq.getLocation()};
+        }
 
         TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
 
         magnitudeView.setText(String.valueOf(eq.getMagnitude()));
 
+        TextView nearView = (TextView) listItemView.findViewById(R.id.near);
+
+        nearView.setText(locationParts[0]);
+
         TextView cityView = (TextView) listItemView.findViewById(R.id.city);
 
-        cityView.setText(eq.getCity());
+        cityView.setText(locationParts[1]);
 
         Date dateObject = new Date(eq.getTimeInMilliseconds());
 
