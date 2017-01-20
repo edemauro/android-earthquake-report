@@ -8,9 +8,9 @@ public class Earthquake {
     private long mTimeInMilliseconds;
 
     public Earthquake(double magnitude, String location, long mTimeInMilliseconds) {
-        this.mMagnitude = magnitude;
-        this.mLocation = location;
-        this.mTimeInMilliseconds = date;
+        mMagnitude = magnitude;
+        mLocation = location;
+        mTimeInMilliseconds = date;
     }
 
     public double getMagnitude() {

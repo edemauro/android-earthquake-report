@@ -12,7 +12,7 @@
         android:layout_weight="1"/>
 
     <TextView
-        android:id="@+id/near"
+        android:id="@+id/offset"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
