@@ -31,12 +31,7 @@ public final class QueryUtils {
      */
     public static ArrayList<Earthquake> extractEarthquakes(String usgs_url) {
 
-        URL url = null;
-        try {
-            url = new URL(usgs_url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        URL url = createUrl(usgs_url);
 
         String jsonResponse = "";
         try {
@@ -67,6 +62,17 @@ public final class QueryUtils {
         }
 
         return earthquakes;
+    }
+
+    private static URL createUrl(String usgs_url) {
+        URL url = null;
+        try {
+            url = new URL(usgs_url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
     }
 
     private static String makeHttpRequest(URL url) throws IOException {
