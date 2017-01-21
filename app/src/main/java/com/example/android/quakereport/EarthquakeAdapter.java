@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
-    private static final String LOG_TAG = EarthquakeActivity.class.getName();
+    private static final String LOG_TAG = "EarthquakeAdapter";
     private Earthquake mEarthquake;
 
     public EarthquakeAdapter(Activity context, ArrayList<Earthquake> earthquakes) {
@@ -45,7 +45,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         Date dateObject = new Date(mEarthquake.getTimeInMilliseconds());
         String formattedDate = formatDate(dateObject);
         String formattedTime = formatTime(dateObject);
-
+        
         TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
         magnitudeView.setText(magnitude);
 
