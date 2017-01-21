@@ -35,8 +35,8 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         mEarthquake = getItem(position);
         String[] locationParts;
 
-        if(mEarthquake.getLocation().contains("of")) {
-            locationParts = mEarthquake.getLocation().split("of");
+        if(mEarthquake.getLocation().contains(" of ")) {
+            locationParts = mEarthquake.getLocation().split(" of ");
         } else {
             locationParts = new String[]{"Near the", mEarthquake.getLocation()};
         }
