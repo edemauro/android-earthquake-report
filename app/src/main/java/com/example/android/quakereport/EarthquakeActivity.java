@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EarthquakeActivity extends AppCompatActivity {
 
@@ -19,7 +20,7 @@ public class EarthquakeActivity extends AppCompatActivity {
             "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2012-01-01&endtime=2012-12-01&minmagnitude=6&limit=10";
 
 
-    public ArrayList<Earthquake> mEarthquakes;
+    public List<Earthquake> mEarthquakes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +31,19 @@ public class EarthquakeActivity extends AppCompatActivity {
         task.execute(USGS_REQUEST_URL);
     }
 
-    private class EarthQuakeAsyncTask extends AsyncTask<String, Void, ArrayList<Earthquake>> {
+    private class EarthQuakeAsyncTask extends AsyncTask<String, Void, List<Earthquake>> {
 
         @Override
-        protected ArrayList<Earthquake> doInBackground(String... urls) {
+        protected List<Earthquake> doInBackground(String... urls) {
             if(urls.length < 1 || urls[0] == null) {
                 return null;
             }
 
-            return mEarthquakes = QueryUtils.extractEarthquakes(urls[0]);
+            return QueryUtils.extractEarthquakes(urls[0]);
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Earthquake> earthquakes) {
+        protected void onPostExecute(List<Earthquake> earthquakes) {
             if(earthquakes == null) {
                 return;
             }
@@ -51,7 +52,7 @@ public class EarthquakeActivity extends AppCompatActivity {
         }
     }
 
-    private void updateUI(ArrayList<Earthquake> earthquakes) {
+    private void updateUI(List<Earthquake> earthquakes) {
         mEarthquakes = earthquakes;
 
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
