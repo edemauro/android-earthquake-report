@@ -34,11 +34,19 @@ public class EarthquakeActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<Earthquake> doInBackground(String... urls) {
+            if(urls.length < 1 || urls[0] == null) {
+                return null;
+            }
+
             return mEarthquakes = QueryUtils.extractEarthquakes(urls[0]);
         }
 
         @Override
         protected void onPostExecute(ArrayList<Earthquake> earthquakes) {
+            if(earthquakes == null) {
+                return;
+            }
+
             updateUI(earthquakes);
         }
     }

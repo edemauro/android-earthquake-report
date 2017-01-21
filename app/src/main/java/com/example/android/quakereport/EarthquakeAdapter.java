@@ -45,7 +45,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         Date dateObject = new Date(mEarthquake.getTimeInMilliseconds());
         String formattedDate = formatDate(dateObject);
         String formattedTime = formatTime(dateObject);
-        
+
         TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
         magnitudeView.setText(magnitude);
 
