@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +26,18 @@ public class EarthquakeActivity extends AppCompatActivity
 
     private EarthquakeAdapter mAdapter;
 
+    private TextView mEmptyStateTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
+        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
+
+        earthquakeListView.setEmptyView(mEmptyStateTextView);
 
         mAdapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
 
@@ -62,6 +69,8 @@ public class EarthquakeActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
+        mEmptyStateTextView.setText(R.string.no_earthquakes);
+
         mAdapter.clear();
 
         if(earthquakes != null && !earthquakes.isEmpty()) {
