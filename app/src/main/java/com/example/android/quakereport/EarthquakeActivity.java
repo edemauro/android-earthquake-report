@@ -1,8 +1,11 @@
 package com.example.android.quakereport;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -62,9 +65,19 @@ public class EarthquakeActivity extends AppCompatActivity
             }
         });
 
+        ConnectivityManager cm = (ConnectivityManager) getApplicationContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        getLoaderManager().initLoader(EARTHQUAKE_LOADER_ID, null, this);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
+        boolean isConnected = activeNetwork != null &&
+                              activeNetwork.isConnectedOrConnecting();
+        if(isConnected) {
+            getLoaderManager().initLoader(EARTHQUAKE_LOADER_ID, null, this);
+        } else {
+            mProgressBar.setVisibility(View.GONE);
+            mEmptyStateTextView.setText(R.string.no_internet);
+        }
     }
 
     @Override
