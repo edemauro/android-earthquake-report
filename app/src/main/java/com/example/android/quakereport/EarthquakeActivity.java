@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,12 +29,16 @@ public class EarthquakeActivity extends AppCompatActivity
 
     private TextView mEmptyStateTextView;
 
+    private ProgressBar mProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+
+        mProgressBar = (ProgressBar) findViewById(R.id.loading_spinner);
 
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
 
@@ -70,6 +75,8 @@ public class EarthquakeActivity extends AppCompatActivity
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
         mEmptyStateTextView.setText(R.string.no_earthquakes);
+
+        mProgressBar.setVisibility(View.GONE);
 
         mAdapter.clear();
 

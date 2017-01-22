@@ -29,7 +29,7 @@ public final class QueryUtils {
      * Return a list of {@link Earthquake} objects that has been built up from
      * parsing a JSON response.
      */
-    public static ArrayList<Earthquake> extractEarthquakes(String usgs_url) {
+    public static ArrayList<Earthquake> fetchEarthquakes(String usgs_url) {
 
         URL url = createUrl(usgs_url);
 
